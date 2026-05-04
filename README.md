@@ -1,6 +1,6 @@
 # TickTick / Dida365 MCP Server
 
-A Model Context Protocol (MCP) server for TickTick and 滴答清单 (Dida365), designed to work instantly with OpenCode, Claude Desktop, and other MCP clients. 
+A Model Context Protocol (MCP) server for TickTick and 滴答清单 (Dida365), designed to work instantly with OpenCode, Claude Desktop, Cherry Studio, and other MCP clients. 
 
 This server acts as a stable, local `stdio` bridge between your AI assistant and your task manager, allowing your AI to read, create, and complete tasks seamlessly.
 
@@ -26,7 +26,13 @@ You don't need to configure complex OAuth callbacks. This server uses your perso
 2. Click your **Avatar -> Settings -> Security -> API Token** (API 口令).
 3. Generate and copy your Personal Access Token.
 
-## OpenCode Configuration
+## Client Configuration
+
+This server can be used in any MCP-compatible client. You only need to configure the environment variables:
+- `DIDA_TOKEN`: Your API token (Required)
+- `SERVICE`: `dida` (for 滴答清单, default) or `ticktick` (for international TickTick)
+
+### 1. OpenCode
 
 OpenCode supports local MCP servers via `stdio`. Add the following to your OpenCode MCP settings:
 
@@ -38,14 +44,25 @@ OpenCode supports local MCP servers via `stdio`. Add the following to your OpenC
       "args": ["/ABSOLUTE_PATH_TO_YOUR_FOLDER/ticktick-mcp-server/dist/index.js"],
       "env": {
         "DIDA_TOKEN": "YOUR_BEARER_TOKEN_HERE",
-        "TICKTICK_DOMAIN": "api.dida365.com" 
+        "SERVICE": "dida" 
       }
     }
   }
 }
 ```
+*Note: If you use the international version, change `"SERVICE": "dida"` to `"SERVICE": "ticktick"`.*
 
-*Note: If you use the international version (TickTick), change `TICKTICK_DOMAIN` to `api.ticktick.com`.*
+### 2. Cherry Studio
+
+Cherry Studio also supports MCP configurations seamlessly.
+1. Open Cherry Studio.
+2. Go to **Settings** (设置) -> **MCP**.
+3. Click **Add New Server** (添加新服务).
+4. Fill in the details:
+   - **Type**: `stdio`
+   - **Command**: `node`
+   - **Args**: `/ABSOLUTE_PATH_TO_YOUR_FOLDER/ticktick-mcp-server/dist/index.js`
+   - **Env**: Add `DIDA_TOKEN` with your token, and `SERVICE` with either `dida` or `ticktick`.
 
 ## Available MCP Tools
 

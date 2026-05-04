@@ -13,8 +13,9 @@ async function main() {
     process.exit(1);
   }
 
-  // Allow configuring domain for TickTick (international) vs Dida365 (China)
-  const domain = process.env.TICKTICK_DOMAIN || 'api.dida365.com';
+  // Determine domain based on service type (Dida365 vs TickTick)
+  const service = (process.env.SERVICE || 'dida').toLowerCase();
+  const domain = service === 'ticktick' ? 'api.ticktick.com' : 'api.dida365.com';
 
   const api = new DidaApi(token, domain);
 
