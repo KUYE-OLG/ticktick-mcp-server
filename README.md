@@ -13,6 +13,13 @@ This server acts as a stable, local `stdio` bridge between your AI assistant and
 - **Rich Task Fields**: Support tags, priorities, due dates, start dates, reminders, recurrence, sort order, and checklist items.
 - **Tag CRUD**: List, create, update, and delete tags.
 
+## Why this project
+- **No OAuth ceremony**: Uses a personal API Token instead of browser callbacks, redirect URIs, and token refresh plumbing.
+- **Dual-service support**: Works with both TickTick and Dida365 through the same MCP server by switching a single `SERVICE` variable.
+- **Broader day-to-day coverage**: Includes tag CRUD and completed-task history, not just basic project/task operations.
+- **Local-first MCP integration**: Runs as a simple `stdio` server that works well with OpenCode, Claude Desktop, Cherry Studio, and similar clients.
+- **Bilingual onboarding**: Documentation is provided in both English and Simplified Chinese.
+
 ## Installation
 
 You don't need to configure complex OAuth callbacks. This server uses your personal API Token (Bearer Token) for a true "out-of-the-box" experience.
