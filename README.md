@@ -44,7 +44,7 @@ OpenCode supports local MCP servers via `stdio`. Add the following to your OpenC
   "mcpServers": {
     "dida365": {
       "command": "npx",
-      "args": ["-y", "@kk_6426988/ticktick-mcp-server"],
+      "args": ["-y", "ticktick-mcp-server"],
       "env": {
         "DIDA_TOKEN": "YOUR_BEARER_TOKEN_HERE",
         "SERVICE": "dida" 
@@ -64,7 +64,7 @@ Cherry Studio also supports MCP configurations seamlessly.
 4. Fill in the details:
    - **Type**: `stdio`
    - **Command**: `npx`
-   - **Args**: `-y @kk_6426988/ticktick-mcp-server`
+   - **Args**: `-y ticktick-mcp-server`
    - **Env**: Add `DIDA_TOKEN` with your token, and `SERVICE` with either `dida` or `ticktick`.
 
 ## Available MCP Tools
