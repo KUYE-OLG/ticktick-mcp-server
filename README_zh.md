@@ -42,8 +42,8 @@ OpenCode 支持通过 `stdio` 连接本地 MCP 服务器。在 OpenCode 的 MCP 
 {
   "mcpServers": {
     "dida365": {
-      "command": "node",
-      "args": ["/你的绝对路径/ticktick-mcp-server/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "@kk_6426988/ticktick-mcp-server"],
       "env": {
         "DIDA_TOKEN": "你的_TOKEN_填在这里",
         "SERVICE": "dida"
@@ -62,8 +62,8 @@ Cherry Studio 也能完美支持 MCP 配置：
 3. 点击 **添加新服务**。
 4. 填写以下信息：
    - **Type (类型)**: `stdio`
-   - **Command (命令)**: `node`
-   - **Args (参数)**: `/你的绝对路径/ticktick-mcp-server/dist/index.js`
+   - **Command (命令)**: `npx`
+   - **Args (参数)**: `-y @kk_6426988/ticktick-mcp-server`
    - **Env (环境变量)**: 增加一行 `DIDA_TOKEN` 并填入你的 token；再增加一行 `SERVICE` 填入 `dida` 或 `ticktick`。
 
 ## 可用 MCP 工具 (Tools)
