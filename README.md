@@ -1,5 +1,7 @@
 # TickTick / Dida365 MCP Server
 
+English | [简体中文](./README_zh.md)
+
 A Model Context Protocol (MCP) server for TickTick and 滴答清单 (Dida365), designed to work instantly with OpenCode, Claude Desktop, Cherry Studio, and other MCP clients. 
 
 This server acts as a stable, local `stdio` bridge between your AI assistant and your task manager, allowing your AI to read, create, and complete tasks seamlessly.
