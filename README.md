@@ -4,16 +4,14 @@ English | [简体中文](./README_zh.md)
 
 A Model Context Protocol (MCP) server for TickTick and 滴答清单 (Dida365), designed to work instantly with OpenCode, Claude Desktop, Cherry Studio, and other MCP clients. 
 
-This server acts as a stable, local `stdio` bridge between your AI assistant and your task manager, allowing your AI to read, create, and complete tasks seamlessly.
+This server acts as a stable, local `stdio` bridge between your AI assistant and your task manager, allowing your AI to manage projects, tasks, tags, and completed-task history seamlessly.
 
 ## Features
-- **Get Projects**: List all your projects/folders.
-- **Get Tasks**: Read tasks from your inbox or a specific project.
-- **Create Task**: Add new tasks with tags, priority, and due dates.
-- **Update Task**: Modify existing tasks (title, content, tags, due date, etc.).
-- **Complete Task**: Mark tasks as done directly from the AI chat.
-- **Delete Task**: Permanently delete tasks.
-- **Get Tags**: List all your tags.
+- **Project CRUD**: List, inspect, create, update, and delete projects/lists.
+- **Task Query**: Read tasks from inbox or a specific project, fetch a single task, and query completed-task history.
+- **Task CRUD**: Create, update, complete, and delete tasks.
+- **Rich Task Fields**: Support tags, priorities, due dates, start dates, reminders, recurrence, sort order, and checklist items.
+- **Tag CRUD**: List, create, update, and delete tags.
 
 ## Installation
 
@@ -72,13 +70,22 @@ Cherry Studio also supports MCP configurations seamlessly.
 ## Available MCP Tools
 
 Once connected, OpenCode (or any MCP client) will automatically discover these tools:
-- `dida_get_projects`: Retrieves all your project IDs.
-- `dida_get_tasks`: Gets uncompleted tasks (defaults to Inbox).
-- `dida_create_task`: Creates a new task.
-- `dida_update_task`: Updates an existing task.
-- `dida_complete_task`: Marks a task as done.
-- `dida_delete_task`: Deletes a task.
-- `dida_get_tags`: Retrieves all your tags.
+- `dida_get_projects`: Retrieve all projects/lists.
+- `dida_get_project`: Retrieve a single project/list by ID.
+- `dida_create_project`: Create a new project/list.
+- `dida_update_project`: Update an existing project/list.
+- `dida_delete_project`: Delete a project/list.
+- `dida_get_tasks`: Retrieve active tasks from a project (defaults to Inbox).
+- `dida_get_task`: Retrieve a single task by ID.
+- `dida_get_completed_tasks`: Retrieve completed tasks with optional project/time filtering.
+- `dida_create_task`: Create a new task with rich scheduling and checklist fields.
+- `dida_update_task`: Update an existing task.
+- `dida_complete_task`: Mark a task as done.
+- `dida_delete_task`: Delete a task.
+- `dida_get_tags`: Retrieve all tags.
+- `dida_create_tag`: Create a new tag.
+- `dida_update_tag`: Update an existing tag.
+- `dida_delete_tag`: Delete a tag.
 
 ## License
 MIT

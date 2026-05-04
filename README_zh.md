@@ -4,16 +4,14 @@
 
 这是一个为 TickTick 和 滴答清单 (Dida365) 设计的 Model Context Protocol (MCP) 服务器，可与 OpenCode、Claude Desktop、Cherry Studio 等 MCP 客户端即插即用。
 
-它作为你的 AI 助手与任务管理器之间稳定、本地的 `stdio` 桥梁，让 AI 可以无缝地读取、创建和完成任务。
+它作为你的 AI 助手与任务管理器之间稳定、本地的 `stdio` 桥梁，让 AI 可以无缝地管理项目、任务、标签以及已完成任务历史。
 
 ## 功能特点
-- **获取清单 (Get Projects)**：列出你所有的项目/清单文件夹。
-- **获取任务 (Get Tasks)**：读取特定清单或收集箱中的待办任务。
-- **创建任务 (Create Task)**：添加新任务，支持设置标签、优先级和截止日期。
-- **更新任务 (Update Task)**：修改现有任务（标题、描述、标签、时间等）。
-- **完成任务 (Complete Task)**：直接在 AI 对话中将任务标记为已完成。
-- **删除任务 (Delete Task)**：永久删除不需要的任务。
-- **获取标签 (Get Tags)**：列出你所有的标签。
+- **项目 CRUD**：列出、查看、创建、更新和删除项目/清单。
+- **任务查询**：读取收集箱或指定项目下的任务、获取单个任务详情、查询已完成任务历史。
+- **任务 CRUD**：创建、更新、完成和删除任务。
+- **丰富任务字段**：支持标签、优先级、截止时间、开始时间、提醒、重复规则、排序和清单项。
+- **标签 CRUD**：列出、创建、更新和删除标签。
 
 ## 安装指南
 
@@ -72,13 +70,22 @@ Cherry Studio 也能完美支持 MCP 配置：
 ## 可用 MCP 工具 (Tools)
 
 连接成功后，OpenCode（或其他 MCP 客户端）会自动识别并使用以下工具：
-- `dida_get_projects`: 获取你所有的清单列表 ID。
-- `dida_get_tasks`: 获取未完成的任务（默认获取收集箱任务）。
-- `dida_create_task`: 创建一个新任务。
+- `dida_get_projects`: 获取所有项目/清单。
+- `dida_get_project`: 根据 ID 获取单个项目/清单详情。
+- `dida_create_project`: 创建新的项目/清单。
+- `dida_update_project`: 更新现有项目/清单。
+- `dida_delete_project`: 删除项目/清单。
+- `dida_get_tasks`: 获取某个项目中的活动任务（默认收集箱）。
+- `dida_get_task`: 根据 ID 获取单个任务详情。
+- `dida_get_completed_tasks`: 按项目或时间范围获取已完成任务。
+- `dida_create_task`: 创建带有丰富时间/清单字段的新任务。
 - `dida_update_task`: 更新现有任务。
 - `dida_complete_task`: 将任务标记为已完成。
 - `dida_delete_task`: 删除任务。
 - `dida_get_tags`: 获取所有标签。
+- `dida_create_tag`: 创建标签。
+- `dida_update_tag`: 更新标签。
+- `dida_delete_tag`: 删除标签。
 
 ## 许可证
 MIT
