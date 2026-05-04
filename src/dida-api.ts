@@ -12,6 +12,7 @@ export interface Task {
   timeZone?: string;
   status: number;
   priority: number;
+  tags?: string[];
 }
 
 export interface Project {
@@ -21,6 +22,11 @@ export interface Project {
   sortOrder: number;
   closed: boolean;
   groupId: string;
+}
+
+export interface Tag {
+  name: string;
+  color: string;
 }
 
 export class DidaApi {
@@ -51,7 +57,21 @@ export class DidaApi {
     return response.data;
   }
 
+  async updateTask(taskId: string, task: Partial<Task>): Promise<Task> {
+    const response = await this.client.post(`/task/${taskId}`, task);
+    return response.data;
+  }
+
   async completeTask(projectId: string, taskId: string): Promise<void> {
     await this.client.post(`/project/${projectId}/task/${taskId}/complete`);
+  }
+
+  async deleteTask(projectId: string, taskId: string): Promise<void> {
+    await this.client.delete(`/project/${projectId}/task/${taskId}`);
+  }
+
+  async getTags(): Promise<Tag[]> {
+    const response = await this.client.get('/tag');
+    return response.data;
   }
 }

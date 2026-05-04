@@ -12,18 +12,10 @@ export function registerTools(server: McpServer, api: DidaApi) {
       try {
         const projects = await api.getProjects();
         return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(projects, null, 2),
-            },
-          ],
+          content: [{ type: 'text', text: JSON.stringify(projects, null, 2) }],
         };
       } catch (error: any) {
-        return {
-          content: [{ type: 'text', text: `Error fetching projects: ${error.message}` }],
-          isError: true,
-        };
+        return { content: [{ type: 'text', text: `Error fetching projects: ${error.message}` }], isError: true };
       }
     }
   );
@@ -37,21 +29,12 @@ export function registerTools(server: McpServer, api: DidaApi) {
     },
     async ({ projectId }) => {
       try {
-        const id = projectId || 'inbox';
-        const tasks = await api.getTasksByProject(id);
+        const tasks = await api.getTasksByProject(projectId || 'inbox');
         return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(tasks, null, 2),
-            },
-          ],
+          content: [{ type: 'text', text: JSON.stringify(tasks, null, 2) }],
         };
       } catch (error: any) {
-        return {
-          content: [{ type: 'text', text: `Error fetching tasks: ${error.message}` }],
-          isError: true,
-        };
+        return { content: [{ type: 'text', text: `Error fetching tasks: ${error.message}` }], isError: true };
       }
     }
   );
@@ -66,8 +49,10 @@ export function registerTools(server: McpServer, api: DidaApi) {
       content: z.string().optional().describe('The description or content of the task'),
       priority: z.number().optional().describe('Task priority: 0 (None), 1 (Low), 3 (Medium), 5 (High)'),
       dueDate: z.string().optional().describe('Due date in format "YYYY-MM-DDTHH:mm:ss+0000"'),
+      isAllDay: z.boolean().optional().describe('Whether the task is an all-day event'),
+      tags: z.array(z.string()).optional().describe('Array of tag names to attach to the task'),
     },
-    async ({ title, projectId, content, priority, dueDate }) => {
+    async ({ title, projectId, content, priority, dueDate, isAllDay, tags }) => {
       try {
         const task = await api.createTask({
           title,
@@ -75,20 +60,14 @@ export function registerTools(server: McpServer, api: DidaApi) {
           content,
           priority,
           dueDate,
+          isAllDay,
+          tags,
         });
         return {
-          content: [
-            {
-              type: 'text',
-              text: `Task created successfully:\n${JSON.stringify(task, null, 2)}`,
-            },
-          ],
+          content: [{ type: 'text', text: `Task created successfully:\n${JSON.stringify(task, null, 2)}` }],
         };
       } catch (error: any) {
-        return {
-          content: [{ type: 'text', text: `Error creating task: ${error.message}` }],
-          isError: true,
-        };
+        return { content: [{ type: 'text', text: `Error creating task: ${error.message}` }], isError: true };
       }
     }
   );
@@ -105,18 +84,82 @@ export function registerTools(server: McpServer, api: DidaApi) {
       try {
         await api.completeTask(projectId, taskId);
         return {
-          content: [
-            {
-              type: 'text',
-              text: `Task ${taskId} marked as completed.`,
-            },
-          ],
+          content: [{ type: 'text', text: `Task ${taskId} marked as completed.` }],
         };
       } catch (error: any) {
+        return { content: [{ type: 'text', text: `Error completing task: ${error.message}` }], isError: true };
+      }
+    }
+  );
+
+  // 5. Update Task
+  server.tool(
+    'dida_update_task',
+    'Update an existing task in Dida365/TickTick',
+    {
+      taskId: z.string().describe('The ID of the task to update'),
+      title: z.string().optional().describe('The new title of the task'),
+      content: z.string().optional().describe('The new description or content'),
+      priority: z.number().optional().describe('Task priority: 0 (None), 1 (Low), 3 (Medium), 5 (High)'),
+      dueDate: z.string().optional().describe('Due date in format "YYYY-MM-DDTHH:mm:ss+0000"'),
+      isAllDay: z.boolean().optional().describe('Whether the task is an all-day event'),
+      tags: z.array(z.string()).optional().describe('Array of tag names to attach to the task'),
+      status: z.number().optional().describe('Task status: 0 (Incomplete), 2 (Completed)'),
+    },
+    async ({ taskId, title, content, priority, dueDate, isAllDay, tags, status }) => {
+      try {
+        const updateData: any = {};
+        if (title !== undefined) updateData.title = title;
+        if (content !== undefined) updateData.content = content;
+        if (priority !== undefined) updateData.priority = priority;
+        if (dueDate !== undefined) updateData.dueDate = dueDate;
+        if (isAllDay !== undefined) updateData.isAllDay = isAllDay;
+        if (tags !== undefined) updateData.tags = tags;
+        if (status !== undefined) updateData.status = status;
+
+        const task = await api.updateTask(taskId, updateData);
         return {
-          content: [{ type: 'text', text: `Error completing task: ${error.message}` }],
-          isError: true,
+          content: [{ type: 'text', text: `Task updated successfully:\n${JSON.stringify(task, null, 2)}` }],
         };
+      } catch (error: any) {
+        return { content: [{ type: 'text', text: `Error updating task: ${error.message}` }], isError: true };
+      }
+    }
+  );
+
+  // 6. Delete Task
+  server.tool(
+    'dida_delete_task',
+    'Delete a task permanently',
+    {
+      taskId: z.string().describe('The ID of the task to delete'),
+      projectId: z.string().describe('The project ID the task belongs to'),
+    },
+    async ({ taskId, projectId }) => {
+      try {
+        await api.deleteTask(projectId, taskId);
+        return {
+          content: [{ type: 'text', text: `Task ${taskId} deleted successfully.` }],
+        };
+      } catch (error: any) {
+        return { content: [{ type: 'text', text: `Error deleting task: ${error.message}` }], isError: true };
+      }
+    }
+  );
+
+  // 7. Get Tags
+  server.tool(
+    'dida_get_tags',
+    'Get all tags from Dida365/TickTick',
+    {},
+    async () => {
+      try {
+        const tags = await api.getTags();
+        return {
+          content: [{ type: 'text', text: JSON.stringify(tags, null, 2) }],
+        };
+      } catch (error: any) {
+        return { content: [{ type: 'text', text: `Error fetching tags: ${error.message}` }], isError: true };
       }
     }
   );

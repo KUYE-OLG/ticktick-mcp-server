@@ -9,8 +9,11 @@
 ## 功能特点
 - **获取清单 (Get Projects)**：列出你所有的项目/清单文件夹。
 - **获取任务 (Get Tasks)**：读取特定清单或收集箱中的待办任务。
-- **创建任务 (Create Task)**：添加新任务，支持设置优先级和截止日期。
+- **创建任务 (Create Task)**：添加新任务，支持设置标签、优先级和截止日期。
+- **更新任务 (Update Task)**：修改现有任务（标题、描述、标签、时间等）。
 - **完成任务 (Complete Task)**：直接在 AI 对话中将任务标记为已完成。
+- **删除任务 (Delete Task)**：永久删除不需要的任务。
+- **获取标签 (Get Tags)**：列出你所有的标签。
 
 ## 安装指南
 
@@ -72,7 +75,10 @@ Cherry Studio 也能完美支持 MCP 配置：
 - `dida_get_projects`: 获取你所有的清单列表 ID。
 - `dida_get_tasks`: 获取未完成的任务（默认获取收集箱任务）。
 - `dida_create_task`: 创建一个新任务。
+- `dida_update_task`: 更新现有任务。
 - `dida_complete_task`: 将任务标记为已完成。
+- `dida_delete_task`: 删除任务。
+- `dida_get_tags`: 获取所有标签。
 
 ## 许可证
 MIT

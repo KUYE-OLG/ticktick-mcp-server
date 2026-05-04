@@ -9,8 +9,11 @@ This server acts as a stable, local `stdio` bridge between your AI assistant and
 ## Features
 - **Get Projects**: List all your projects/folders.
 - **Get Tasks**: Read tasks from your inbox or a specific project.
-- **Create Task**: Add new tasks with priority and due dates.
+- **Create Task**: Add new tasks with tags, priority, and due dates.
+- **Update Task**: Modify existing tasks (title, content, tags, due date, etc.).
 - **Complete Task**: Mark tasks as done directly from the AI chat.
+- **Delete Task**: Permanently delete tasks.
+- **Get Tags**: List all your tags.
 
 ## Installation
 
@@ -72,7 +75,10 @@ Once connected, OpenCode (or any MCP client) will automatically discover these t
 - `dida_get_projects`: Retrieves all your project IDs.
 - `dida_get_tasks`: Gets uncompleted tasks (defaults to Inbox).
 - `dida_create_task`: Creates a new task.
+- `dida_update_task`: Updates an existing task.
 - `dida_complete_task`: Marks a task as done.
+- `dida_delete_task`: Deletes a task.
+- `dida_get_tags`: Retrieves all your tags.
 
 ## License
 MIT
